@@ -10,7 +10,7 @@ import (
 )
 
 func GetLink(_id int, _secret string, _url string) string {
-	const serviceUrl = "http://302-location302.com"
+	const serviceUrl = "http://302-location.com"
 	redirectUrl := url.QueryEscape(_url)
 	buffer := bytes.Buffer{}
 	buffer.WriteString(_secret)
