@@ -14,13 +14,11 @@ func GetLink(_id int, _secret string, _url string) string {
 	redirectUrl := url.QueryEscape(_url)
 	buffer := bytes.Buffer{}
 	buffer.WriteString(_secret)
-	buffer.WriteString(strconv.Itoa(_id))
+	buffer.WriteString(strconv.FormatInt(int64(_id), 10))
 	buffer.WriteString(_url)
-	converted := []byte(buffer.String())
 	hasher := sha256.New()
-	hasher.Write(converted)
-	token := (hex.EncodeToString(hasher.Sum(nil)))
-	token = token[0:4]
+	hasher.Write(buffer.Bytes())
+	token := (hex.EncodeToString(hasher.Sum(nil)))[0:4]
 	params := fmt.Sprintf("i=%d&u=%s&t=%s", _id, redirectUrl, token)
 	return fmt.Sprintf("%s/?%s", serviceUrl, params)
 }
