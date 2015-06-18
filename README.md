@@ -10,7 +10,7 @@ import "github.com/natd/location302"
 location302.GetLink(1, "secret", "http://google.com")
 ```
 
-or you can build a Location and get a link
+or you can make a Location and get a link
 
 ```go
 loc := location302.Location{}
@@ -26,8 +26,14 @@ or in one line with fluent api
 location302.NewLocation(1, "secret", "http://google.com").GetLink()
 ```
 
-more fluent api
+you can allocate memory with go new and use fluent api
 
 ```go
 link := new(location302.Location).WithId(1).WithSecret("secret").WithUrl("http://google.com").GetLink()
+```
+
+or with New() method and use fluent api
+
+```go
+location302.New().WithId(1).WithSecret("secret").WithUrl("http://google.com").GetLink()
 ```

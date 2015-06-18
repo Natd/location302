@@ -42,7 +42,7 @@ func (l *Location) SetUrl(value string) {
 
 
 func (l *Location) GetLink() string {
-	return generateLink(l.id, l.secret, l.url)
+	return l.generateLink(l.id, l.secret, l.url)
 }
 
 func GetLink(_id int, _secret string, _url string) string {
@@ -54,10 +54,15 @@ func GetLink(_id int, _secret string, _url string) string {
 }
 
 func NewLocation(id int, secret string, url string) *Location {
-	var loc = &Location{}
+	var loc = new(Location)
 	loc.SetId(id)
 	loc.SetSecret(secret)
 	loc.SetUrl(url)
+	return loc
+}
+
+func New() *Location {
+	var loc = &Location{}
 	return loc
 }
 
@@ -80,16 +85,34 @@ func (l *Location) WithUrl(value string) *Location {
 
 //private
 
-func generateLink(_id int, _secret string, _url string) string {
-	const serviceUrl = "http://302-location.com"
-	redirectUrl := url.QueryEscape(_url)
+func (l Location) generateLink(_id int, _secret string, _url string) string {
+	buffer := concat(_secret, strconv.FormatInt(int64(_id), 10), _url)
+	token := l.getToken(buffer)
+	return token
+}
+
+func (l Location) prepareUrl() string {
+	redirectUrl := url.QueryEscape(l.url)
+	return redirectUrl
+}
+
+func (l Location) getServiceUrl() string {
+	return "http://302-location.com"
+}
+
+// Concatenating slice of string in one string
+func concat(strings ...string) bytes.Buffer {
 	buffer := bytes.Buffer{}
-	buffer.WriteString(_secret)
-	buffer.WriteString(strconv.FormatInt(int64(_id), 10))
-	buffer.WriteString(_url)
+	for _, str := range strings {
+		buffer.WriteString(str)
+	}
+	return buffer
+}
+
+func (l *Location) getToken(buffer bytes.Buffer) string {
 	hasher := sha256.New()
 	hasher.Write(buffer.Bytes())
 	token := (hex.EncodeToString(hasher.Sum(nil)))[0:4]
-	params := fmt.Sprintf("i=%d&u=%s&t=%s", _id, redirectUrl, token)
-	return fmt.Sprintf("%s/?%s", serviceUrl, params)
+	params := fmt.Sprintf("i=%d&u=%s&t=%s", l.id, l.prepareUrl(), token)
+	return fmt.Sprintf("%s/?%s", l.getServiceUrl(), params)
 }
