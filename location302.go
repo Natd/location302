@@ -46,8 +46,14 @@ func (l *Location) GetLink() string {
 }
 
 func GetLink(_id int, _secret string, _url string) string {
-	return generateLink(_id, _secret, _url)
+	loc := Location{}
+	loc.SetId(_id)
+	loc.SetSecret(_secret)
+	loc.SetUrl(_url)
+	return loc.GetLink()
 }
+
+//private
 
 func generateLink(_id int, _secret string, _url string) string {
 	const serviceUrl = "http://302-location.com"
