@@ -53,6 +53,31 @@ func GetLink(_id int, _secret string, _url string) string {
 	return loc.GetLink()
 }
 
+func NewLocation(id int, secret string, url string) *Location {
+	var loc = &Location{}
+	loc.SetId(id)
+	loc.SetSecret(secret)
+	loc.SetUrl(url)
+	return loc
+}
+
+// Fluent API methods
+
+func (l *Location) WithId(value int) *Location {
+	l.id = value
+	return l
+}
+
+func (l *Location) WithSecret(value string) *Location {
+	l.secret = value
+	return l
+}
+
+func (l *Location) WithUrl(value string) *Location {
+	l.url = value
+	return l
+}
+
 //private
 
 func generateLink(_id int, _secret string, _url string) string {
