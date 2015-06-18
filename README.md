@@ -35,5 +35,5 @@ link := new(location302.Location).WithId(1).WithSecret("secret").WithUrl("http:/
 or with New() method and use fluent api
 
 ```go
-location302.New().WithId(1).WithSecret("secret").WithUrl("http://google.com").GetLink()
+link := location302.New().WithId(1).WithSecret("secret").WithUrl("http://google.com").GetLink()
 ```
