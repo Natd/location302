@@ -17,6 +17,17 @@ type Location struct {
 	url string
 }
 
+// Simple method build Location and return builder link
+func GetLink(id int, secret string, url string) string {
+	loc := Location{}
+	loc.SetId(id)
+	loc.SetSecret(secret)
+	loc.SetUrl(url)
+	return loc.GetLink()
+}
+
+// Getter and Setters START
+
 func (l Location) Id() int {
 	return l.id
 }
@@ -41,17 +52,11 @@ func (l *Location) SetUrl(value string) {
 	l.url = value
 }
 
+// Getter and Setters END
+
 
 func (l *Location) GetLink() string {
 	return l.generateLink(l.id, l.secret, l.url)
-}
-
-func GetLink(_id int, _secret string, _url string) string {
-	loc := Location{}
-	loc.SetId(_id)
-	loc.SetSecret(_secret)
-	loc.SetUrl(_url)
-	return loc.GetLink()
 }
 
 func NewLocation(id int, secret string, url string) *Location {
@@ -65,23 +70,6 @@ func NewLocation(id int, secret string, url string) *Location {
 func New() *Location {
 	var loc = &Location{}
 	return loc
-}
-
-// Fluent API methods
-
-func (l *Location) WithId(value int) *Location {
-	l.id = value
-	return l
-}
-
-func (l *Location) WithSecret(value string) *Location {
-	l.secret = value
-	return l
-}
-
-func (l *Location) WithUrl(value string) *Location {
-	l.url = value
-	return l
 }
 
 func (l Location) Verify() (bool, error) {
@@ -103,6 +91,25 @@ func (l Location) Verify() (bool, error) {
 		return false, fmt.Errorf("Status code is %d", response.StatusCode)
 	}
 }
+
+// Fluent API methods START
+
+func (l *Location) WithId(value int) *Location {
+	l.id = value
+	return l
+}
+
+func (l *Location) WithSecret(value string) *Location {
+	l.secret = value
+	return l
+}
+
+func (l *Location) WithUrl(value string) *Location {
+	l.url = value
+	return l
+}
+
+// Fluent API methods END
 
 //private
 
