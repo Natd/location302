@@ -37,3 +37,19 @@ or with New() method and use fluent api
 ```go
 link := location302.New().WithId(1).WithSecret("secret").WithUrl("http://google.com").GetLink()
 ```
+
+you can verify link, this method make HEAD request to builded already link and return bool and error
+
+```go
+link := location302.New().WithId(1).WithSecret("asdasdadww").WithUrl("http://mail.ru")
+response, err := link.VerifyLink()
+if err != nil {
+	fmt.Println(err) //Handle this error
+}else {
+	if response {
+		fmt.Println(true)
+	}else {
+		fmt.Println(false)
+	}
+}
+```

@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"bytes"
 	"net/url"
+	"net/http"
 )
 
 
@@ -81,6 +82,26 @@ func (l *Location) WithSecret(value string) *Location {
 func (l *Location) WithUrl(value string) *Location {
 	l.url = value
 	return l
+}
+
+func (l Location) VerifyLink() (bool, error) {
+	client := &http.Client{}
+	request, err := http.NewRequest("HEAD", l.GetLink(), nil)
+	if err != nil {
+		return false, err
+	}
+	request.Header.Set("User-Agent", "Location302 Bot v 1.0")
+	response, err := client.Do(request)
+	if err != nil {
+		return false, err
+	}
+
+	defer response.Body.Close()
+	if response.StatusCode == 200{
+		return true, nil
+	}else {
+		return false, fmt.Errorf("Status code is %d", response.StatusCode)
+	}
 }
 
 //private
