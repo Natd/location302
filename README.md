@@ -42,7 +42,7 @@ you can verify link, this method make HEAD request to builded already link and r
 
 ```go
 link := location302.New().WithId(1).WithSecret("secret").WithUrl("http://google.com")
-response, err := link.VerifyLink()
+response, err := link.Verify()
 if err != nil {
 	fmt.Println(err) //Handle this error
 }else {

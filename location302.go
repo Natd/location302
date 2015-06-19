@@ -84,7 +84,7 @@ func (l *Location) WithUrl(value string) *Location {
 	return l
 }
 
-func (l Location) VerifyLink() (bool, error) {
+func (l Location) Verify() (bool, error) {
 	client := &http.Client{}
 	request, err := http.NewRequest("HEAD", l.GetLink(), nil)
 	if err != nil {
