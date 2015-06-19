@@ -17,7 +17,7 @@ type Location struct {
 	url string
 }
 
-// Simple method build Location and return builder link
+// Simple method build Location and return builded link
 func GetLink(id int, secret string, url string) string {
 	loc := Location{}
 	loc.SetId(id)
