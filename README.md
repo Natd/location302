@@ -41,7 +41,7 @@ link := location302.New().WithId(1).WithSecret("secret").WithUrl("http://google.
 you can verify link, this method make HEAD request to builded already link and return bool and error
 
 ```go
-link := location302.New().WithId(1).WithSecret("asdasdadww").WithUrl("http://mail.ru")
+link := location302.New().WithId(1).WithSecret("secret").WithUrl("http://google.com")
 response, err := link.VerifyLink()
 if err != nil {
 	fmt.Println(err) //Handle this error
