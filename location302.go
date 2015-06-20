@@ -113,8 +113,8 @@ func (l *Location) WithUrl(value string) *Location {
 
 //private
 
-func (l Location) generateLink(_id int, _secret string, _url string) string {
-	buffer := concat(_secret, strconv.FormatInt(int64(_id), 10), _url)
+func (l Location) generateLink(id int, secret string, url string) string {
+	buffer := concat(secret, strconv.FormatInt(int64(id), 10), url)
 	token := l.getToken(buffer)
 	return token
 }
